@@ -20,7 +20,7 @@ def train_ratio(input_excel_path, export_path):
             sub_index = 0
             for i in range(index, len(input_data)):
                 if input_data[index][2] == input_data[index + sub_index][2] and input_data[index][4] == \
-                        input_data[index + sub_index][4] and input_data[index][6] == input_data[index + sub_index][6]:
+                        input_data[index + sub_index][4]:
                     train.append(input_data[index + sub_index])
                 else:
                     trains.append(train)
@@ -39,15 +39,8 @@ def train_ratio(input_excel_path, export_path):
             'DayOfWeek': calendar.day_name[train[0][2].weekday()],
             'Date': train[0][2].strftime("%m/%d/%Y %H:%M:%S"),
             'Inbound/OutBound': 'O' if train[0][3] == 'DFLC' else 'I',
-            'DFLC/ARIL Hour': '',
             'Train Symbol': train[0][4],
             'NumberOfAllShipments': len(train),
-            'NumberOf20EAtlanta': get_count(train, 20, 'E', 'ATLANTA'),
-            'NumberOf20LAtlanta': get_count(train, 20, 'L', 'ATLANTA'),
-            'NumberOf40EAtlanta': get_count(train, 40, 'E', 'ATLANTA'),
-            'NumberOf40LAtlanta': get_count(train, 40, 'L', 'ATLANTA'),
-            'NumberOf45EAtlanta': get_count(train, 45, 'E', 'ATLANTA'),
-            'NumberOf45LAtlanta': get_count(train, 45, 'L', 'ATLANTA'),
             'NumberOf20EAustell': get_count(train, 20, 'E', 'AUSTELL'),
             'NumberOf20LAustell': get_count(train, 20, 'L', 'AUSTELL'),
             'NumberOf40EAustell': get_count(train, 40, 'E', 'AUSTELL'),
@@ -108,14 +101,18 @@ def get_count(shipments, length, empty_loaded, city):
     for shipment in shipments:
         if city == 'GARDEN_CITY':
             if shipment[6] == length and shipment[5] == empty_loaded and (
-                    shipment[8] == city or shipment[8] == 'SAVANNAH'):
+                    shipment[10] == city or shipment[10] == 'SAVANNAH'):
                 count += 1
         elif city == 'CHARLESTON':
             if shipment[6] == length and shipment[5] == empty_loaded and (
-                    shipment[8] == city or shipment[8] == 'NORTH_CHARLESTON'):
+                    shipment[10] == city or shipment[10] == 'NORTH_CHARLESTON'):
+                count += 1
+        elif city == 'AUSTELL':
+            if shipment[6] == length and shipment[5] == empty_loaded and (
+                    shipment[10] == city or shipment[10] == 'ATLANTA'):
                 count += 1
         else:
-            if shipment[6] == length and shipment[5] == empty_loaded and shipment[8] == city:
+            if shipment[6] == length and shipment[5] == empty_loaded and shipment[10] == city:
                 count += 1
     return count
 
