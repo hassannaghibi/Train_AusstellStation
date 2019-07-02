@@ -4,7 +4,7 @@ import json
 import pandas
 
 
-def train_ratio(input_excel_path, export_path):
+def train_classification_count(input_excel_path, export_path):
     input_data = pandas.read_excel(input_excel_path)  # get data from excel
     input_data = input_data.get_values()  # get all values from input excel
 
@@ -118,6 +118,6 @@ def get_count(shipments, length, empty_loaded, city):
 
 
 print("start")
-url = "C:/Users/Hassan/Desktop/pythonExport/TrainRatio/"
-train_ratio(url + "input.xlsx", url + "output.json")
+url = "C:/Users/Hassan/Desktop/pythonExport/TrainClassificationCount/"
+train_classification_count(url + "input.xlsx", url + "output.json")
 print("finished")
