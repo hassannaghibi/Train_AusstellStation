@@ -1,7 +1,8 @@
 import pandas
 
 
-def initial_inventory_summary(input_path, rmfc_export_path, ichr_export_path, start, end, number_of_days_for_input):
+def initial_inventory_summary(input_path, rmfc_export_path, ichr_export_path, start, end, number_of_days_for_input,
+                              consider_null_weigth_as_empty):
     input_data = pandas.read_excel(input_path)  # get data from excel
     values = input_data.get_values()  # get all values from input excel
 
@@ -51,7 +52,8 @@ def initial_inventory_summary(input_path, rmfc_export_path, ichr_export_path, st
                         for i1 in range(len(cities)):
                             for i2 in range(len(length_list)):
                                 for i3 in range(len(loaded)):
-                                    count[i] += get_count(sub_data, length_list[i2], loaded[i3], cities[i1])
+                                    count[i] += get_count(sub_data, length_list[i2], loaded[i3], cities[i1],
+                                                          consider_null_weigth_as_empty)
                                     i += 1
 
     result = []
@@ -78,20 +80,26 @@ def initial_inventory_summary(input_path, rmfc_export_path, ichr_export_path, st
     pandas.DataFrame(second_result, [""] * len(second_result), header).to_excel(ichr_export_path)  # export data
 
 
-def get_count(shipment, length, empty_loaded, city):
+def get_count(shipment, length, empty_loaded, city, consider_null_weigth_as_empty):
     count = 0
     if city == 'GARDEN_CITY':
-        if shipment[6] == length and (shipment[16] == '?' if empty_loaded == 'E' else shipment[16] != '?') and (
+        if shipment[6] == length and ((shipment[16] == '?' if empty_loaded == 'E' else shipment[
+                                                                                           16] != '?') if consider_null_weigth_as_empty == True else
+        shipment[5] == empty_loaded) and (
                 shipment[10] == city or shipment[
             10] == 'SAVANNAH'):  # if city name is savannah add count to garden city
             count += 1
     elif city == 'CHARLESTON':
-        if shipment[6] == length and (shipment[16] == '?' if empty_loaded == 'E' else shipment[16] != '?') and (
+        if shipment[6] == length and ((shipment[16] == '?' if empty_loaded == 'E' else shipment[
+                                                                                           16] != '?') if consider_null_weigth_as_empty == True else
+        shipment[5] == empty_loaded) and (
                 shipment[10] == city or shipment[
             10] == 'NORTH_CHARLESTON'):  # if city name is north charleston add count to charleston
             count += 1
     else:
-        if shipment[6] == length and (shipment[16] == '?' if empty_loaded == 'E' else shipment[16] != '?') and shipment[
+        if shipment[6] == length and ((shipment[16] == '?' if empty_loaded == 'E' else shipment[
+                                                                                           16] != '?') if consider_null_weigth_as_empty == True else
+        shipment[5] == empty_loaded) and shipment[
             10] == city:  # if length and empty loaded and city is equel => count++
             count += 1
     return count
@@ -99,5 +107,5 @@ def get_count(shipment, length, empty_loaded, city):
 
 print("Start shipment_in_parking")
 url = "C:/Users/Hassan/Desktop/pythonExport/InitialInventorySummary/"
-initial_inventory_summary(url + 'input.xlsx', url + "RMFC_Output.xlsx", url + "ICHR_Output.xlsx", 30, 60, 2)
+initial_inventory_summary(url + 'input.xlsx', url + "RMFC_Output.xlsx", url + "ICHR_Output.xlsx", 30, 60, 2, True)
 print("Finished")
