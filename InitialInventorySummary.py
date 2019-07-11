@@ -1,7 +1,8 @@
 import pandas
 
 
-def initial_inventory_summary(input_path, rmfc_export_path, ichr_export_path, start, end, number_of_days_for_input,
+def initial_inventory_summary(input_path, rmfc_export_path, ichr_export_path, first_start, first_end, second_end,
+                              third_end, forth_end, fifth_end, number_of_days_for_input,
                               consider_null_weigth_as_empty):
     input_data = pandas.read_excel(input_path)  # get data from excel
     values = input_data.get_values()  # get all values from input excel
@@ -15,6 +16,10 @@ def initial_inventory_summary(input_path, rmfc_export_path, ichr_export_path, st
     first_count = 0
     second_count = 0
     third_count = 0
+    forth_count = 0
+    fifth_count = 0
+    sixth_count = 0
+    seventh_count = 0
     rmfc_eqinit_list = []
     ichr_eqinit_list = []
 
@@ -36,12 +41,20 @@ def initial_inventory_summary(input_path, rmfc_export_path, ichr_export_path, st
                         if sub_data[6] == 45:
                             count_45 += 1
 
-                        if sub_data[20] <= start:
+                        if sub_data[20] <= first_start:
                             first_count += 1
-                        if start < sub_data[20] <= end:
+                        if first_start < sub_data[20] <= first_end:
                             second_count += 1
-                        if sub_data[20] > end:
+                        if first_end < sub_data[20] <= second_end:
                             third_count += 1
+                        if second_end < sub_data[20] <= third_end:
+                            forth_count += 1
+                        if third_end < sub_data[20] <= forth_end:
+                            fifth_count += 1
+                        if forth_end < sub_data[20] <= fifth_end:
+                            sixth_count += 1
+                        if sub_data[20] > fifth_end:
+                            seventh_count += 1
 
         if not data[1] in ichr_eqinit_list:
             for sub_data in values:
@@ -63,9 +76,16 @@ def initial_inventory_summary(input_path, rmfc_export_path, ichr_export_path, st
     result.insert(3, first_count / number_of_days_for_input)
     result.insert(4, second_count / number_of_days_for_input)
     result.insert(5, third_count / number_of_days_for_input)
+    result.insert(6, forth_count / number_of_days_for_input)
+    result.insert(7, fifth_count / number_of_days_for_input)
+    result.insert(8, sixth_count / number_of_days_for_input)
+    result.insert(9, seventh_count / number_of_days_for_input)
     first_result.append(result)
 
-    header = ["20", "40", "45", "0 - " + str(start), str(start) + " - " + str(end), str(end) + " - ..."]
+    header = ["20", "40", "45", "0 - " + str(first_start), str(first_start) + " - " + str(first_end),
+              str(first_end) + " - " + str(second_end), str(second_end) + " - " + str(third_end),
+              str(third_end) + " - " + str(forth_end), str(forth_end) + " - " + str(fifth_end),
+              str(fifth_end) + " - ..."]
     pandas.DataFrame(first_result, [""] * len(first_result), header).to_excel(rmfc_export_path)  # export data
 
     i = 0
@@ -105,7 +125,8 @@ def get_count(shipment, length, empty_loaded, city, consider_null_weigth_as_empt
     return count
 
 
-print("Start shipment_in_parking")
+print("Start")
 url = "C:/Users/Hassan/Desktop/pythonExport/InitialInventorySummary/"
-initial_inventory_summary(url + 'input.xlsx', url + "RMFC_Output.xlsx", url + "ICHR_Output.xlsx", 30, 60, 2, True)
+initial_inventory_summary(url + 'input.xlsx', url + "RMFC_Output.xlsx", url + "ICHR_Output.xlsx", 30, 60, 70, 80, 90,
+                          100, 2, True)
 print("Finished")
