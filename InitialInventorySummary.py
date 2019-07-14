@@ -105,16 +105,36 @@ def get_count(shipment, length, empty_loaded, city, consider_null_weigth_as_empt
     if city == 'GARDEN_CITY':
         if shipment[6] == length and ((shipment[16] == '?' if empty_loaded == 'E' else shipment[
                                                                                            16] != '?') if consider_null_weigth_as_empty == True else
-        shipment[5] == empty_loaded) and (
-                shipment[10] == city or shipment[
+        shipment[5] == empty_loaded) and (shipment[10] == city or shipment[
             10] == 'SAVANNAH'):  # if city name is savannah add count to garden city
             count += 1
     elif city == 'CHARLESTON':
         if shipment[6] == length and ((shipment[16] == '?' if empty_loaded == 'E' else shipment[
                                                                                            16] != '?') if consider_null_weigth_as_empty == True else
-        shipment[5] == empty_loaded) and (
-                shipment[10] == city or shipment[
+        shipment[5] == empty_loaded) and (shipment[10] == city or shipment[
             10] == 'NORTH_CHARLESTON'):  # if city name is north charleston add count to charleston
+            count += 1
+    elif city == 'NEW_ORLEANS':
+        if shipment[6] == length and ((shipment[16] == '?' if empty_loaded == 'E' else shipment[
+                                                                                           16] != '?') if consider_null_weigth_as_empty == True else
+        shipment[5] == empty_loaded) and (
+                shipment[10] == city or shipment[10] == 'MCCALLA'):  # if city name is MCCALLA add count to NEW_ORLEANS
+            count += 1
+    elif city == 'CHICAGO':
+        if shipment[6] == length and ((shipment[16] == '?' if empty_loaded == 'E' else shipment[
+                                                                                           16] != '?') if consider_null_weigth_as_empty == True else
+        shipment[5] == empty_loaded) and (
+                shipment[10] == city or shipment[10] == 'COLUMBUS'):  # if city name is COLUMBUS add count to CHICAGO
+            count += 1
+        elif shipment[6] == length and ((shipment[16] == '?' if empty_loaded == 'E' else shipment[
+                                                                                             16] != '?') if consider_null_weigth_as_empty == True else
+        shipment[5] == empty_loaded) and (shipment[10] == city or shipment[
+            10] == 'CINCINNATI'):  # if city name is CINCINNATI add count to CHICAGO
+            count += 1
+        elif shipment[6] == length and ((shipment[16] == '?' if empty_loaded == 'E' else shipment[
+                                                                                             16] != '?') if consider_null_weigth_as_empty == True else
+        shipment[5] == empty_loaded) and (shipment[10] == city or shipment[
+            10] == 'GEORGETOWN'):  # if city name is GEORGETOWN add count to CHICAGO
             count += 1
     else:
         if shipment[6] == length and ((shipment[16] == '?' if empty_loaded == 'E' else shipment[

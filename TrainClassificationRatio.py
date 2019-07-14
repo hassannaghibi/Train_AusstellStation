@@ -66,7 +66,7 @@ def train_classification_ratio(input_excel_path, inbound_export_path, outbound_e
 
                     if status:
                         sub_coefficient = 100 / (
-                                    all_shipment / coefficient)  # if status is true all train length to ratio
+                                all_shipment / coefficient)  # if status is true all train length to ratio
 
                     count[0] += get_count(sub_train, 20, 'E', 'AUSTELL')  # get count with 3 parameter
                     dic['20EAUSTELL'] = format((count[0] / coefficient) * sub_coefficient, '.2f')
@@ -216,10 +216,26 @@ def get_count(shipments, length, empty_loaded, city):
             if shipment[6] == length and shipment[5] == empty_loaded and (
                     shipment[10] == city or shipment[10] == 'ATLANTA'):  # if city name is atlanta add count to austell
                 count += 1
-        else:
-            if shipment[6] == length and shipment[5] == empty_loaded and shipment[
-                10] == city:  # if length and empty loaded and city is equel => count++
+        elif city == 'NEW_ORLEANS':
+            if shipment[6] == length and shipment[5] == empty_loaded and (
+                    shipment[10] == city or shipment[
+                10] == 'MCCALLA'):  # if city name is MCCALLA add count to NEW_ORLEANS
                 count += 1
+        elif city == 'CHICAGO':
+            if shipment[6] == length and shipment[5] == empty_loaded and (
+                    shipment[10] == city or shipment[
+                10] == 'COLUMBUS'):  # if city name is COLUMBUS add count to CHICAGO
+                count += 1
+            elif shipment[6] == length and shipment[5] == empty_loaded and (shipment[10] == city or shipment[
+                10] == 'CINCINNATI'):  # if city name is CINCINNATI add count to CHICAGO
+                count += 1
+            elif shipment[6] == length and shipment[5] == empty_loaded and (shipment[10] == city or shipment[
+                10] == 'GEORGETOWN'):  # if city name is GEORGETOWN add count to CHICAGO
+                count += 1
+    else:
+        if shipment[6] == length and shipment[5] == empty_loaded and shipment[
+            10] == city:  # if length and empty loaded and city is equel => count++
+            count += 1
     return count
 
 

@@ -9,7 +9,7 @@ def initial_inventory_summary(input_path, export_path):
     header = ["EQ_INIT_NR", "WAYBILL", "EVENT TIMESTAMP EST", "EVENT TYPE", "LOADED EMPTY", "EQ LENGTH", "EQ TYPE",
               "NS ORGIN", "NS ORIGIN ST", "NS DEST", "NS DEST ST", "ORGN", "ORGN ST", "DEST", "DEST ST", "NET_WGT",
               "SHPR_CUST_NM", "CY_NotStackable", "IS SHIPMENT IN PARKING", "HOURS STAYED IN PARKING", "Has DFLC",
-              "DFLC LOADED EMPTY", "DFLC NET_WGT"]
+              "DFLC LOADED EMPTY", "DFLC NET_WGT", "Has ICHR"]
 
     for data in values:
         result = []
@@ -18,6 +18,7 @@ def initial_inventory_summary(input_path, export_path):
         result.insert(20, False)
         result.insert(21, "")
         result.insert(22, 0)
+        result.insert(23, False)
         final_result.append(result)
 
     index = 0
@@ -30,6 +31,7 @@ def initial_inventory_summary(input_path, export_path):
                         final_result[index][20] = True
                         final_result[index][21] = data[4]
                         final_result[index][22] = data[15]
+                        final_result[index + sub_index][23] = True
                 sub_index += 1
         index += 1
 
