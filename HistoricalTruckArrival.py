@@ -38,7 +38,7 @@ def calculate_truck_arrival(input_excel_path, export_path, start_time):
         index += 1
 
     with open(export_path, 'w') as outfile:  # export result Json to json file
-        json.dump(result, outfile, indent=4)
+        json.dump(result, outfile, indent=2)
 
 
 def convert_str_to_time(date):
