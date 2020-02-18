@@ -5,25 +5,20 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import sun.reflect.generics.tree.Tree;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.TreeSet;
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        //  read from Mysql database
-        MySQLAccess dao = new MySQLAccess("localhost:3306/","test","root","");
+        //read from Mysql database
+        MySQLAccess dao = new MySQLAccess("localhost:3306/", "test", "root", "");
         dao.readDataBase();
-
-        //  read from txt file
-        readTextFile();
-        //  write to txt file
-        writeTextFile();
-        //  read from excel file
-
-        //  write to excel file
-//        createExcel();
     }
 
     static void createExcel(ArrayList<InputData> data, String path, String sheetTitle) {
@@ -59,9 +54,9 @@ public class Main {
         }
     }
 
-    static void writeTextFile(){
+    static void writeTextFile() {
         try {
-            PrintWriter outputFile =    new PrintWriter(
+            PrintWriter outputFile = new PrintWriter(
                     new BufferedWriter(
                             new FileWriter("words.txt")));
             // (true is used to append data to the file)
@@ -78,11 +73,12 @@ public class Main {
         }
     }
 
-    public static String readTextFile () {
+    public static String readTextFile() {
         String fileContent = "";
-        BufferedReader br = null; ;
+        BufferedReader br = null;
+        ;
         try {
-            br = new BufferedReader (new FileReader("TextFile.txt"));
+            br = new BufferedReader(new FileReader("TextFile.txt"));
             StringBuilder sb = new StringBuilder();
             String fileLine = "";
             while ((fileLine = br.readLine()) != null) {
