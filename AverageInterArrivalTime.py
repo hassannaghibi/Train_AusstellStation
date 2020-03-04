@@ -19,7 +19,7 @@ def main(input_path, export_path):
                 count += 1
                 ar.append(d[1])
         avg = sum / count
-        fit = Fitter(ar, min(ar), max(ar), len(ar))
+        fit = Fitter(ar, min(ar), max(ar), len(ar), distributions=['gamma', 'rayleigh', 'uniform'])
         fit.fit()
         result.append([u[0], u[3], avg, str(fit.fitted_param), str(fit.get_best())])
 

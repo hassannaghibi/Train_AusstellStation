@@ -5,20 +5,22 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import sun.reflect.generics.tree.Tree;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Main {
+
     public static void main(String[] args) throws Exception {
 
         //read from Mysql database
-        MySQLAccess dao = new MySQLAccess("localhost:3306/", "test", "root", "");
-        dao.readDataBase();
+//        MySQLAccess dao = new MySQLAccess("localhost:3306/", "test", "root", "");
+//        dao.readDataBase();
+
+
     }
 
     static void createExcel(ArrayList<InputData> data, String path, String sheetTitle) {
